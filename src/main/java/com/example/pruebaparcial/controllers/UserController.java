@@ -68,11 +68,7 @@ public class UserController {
     * @throws UserNotFoundException
     */
 
-    @PostMapping("/uploadPhoto/{userId}")
-    public ResponseEntity<Void> uploadPhoto(@RequestParam("photo") MultipartFile photo, @PathVariable Long userId) throws UserNotFoundException, IOException {
-        userService.uploadPhoto(photo, userId);
-        return ResponseEntity.ok().build();
-    }
+    
 
     /**
     * Elimina un usuario existente
