@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.pruebaparcial.dto.UserDTO;
 import com.example.pruebaparcial.dto.ChangeUserInfoDTO;
 import com.example.pruebaparcial.dto.UserInfoDTO;
-import com.example.pruebaparcial.entities.Image;
+
 import com.example.pruebaparcial.entities.User;
-import com.example.pruebaparcial.repositories.ImageRepository;
+
 import com.example.pruebaparcial.repositories.UserRepository;
 import com.example.pruebaparcial.exceptions.UserNotFoundException;
 import com.example.pruebaparcial.exceptions.UserNotValidException;
@@ -25,13 +25,13 @@ import com.example.pruebaparcial.exceptions.UserNotValidException;
 public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final ImageRepository imageRepository;
+   
 
     @Autowired
-    public UserService(UserRepository userRepository, ModelMapper modelMapper, ImageRepository imageRepository) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.imageRepository = imageRepository;
+        
     }
 
     public UserDTO convertToDto(User user) {
@@ -57,13 +57,15 @@ public class UserService {
 
     /**
     * Crea un nuevo usuario después de verificar si todos los campos son válidos
+    user.getEmail()
     * @param user
     * @throws UserNotValidException si el usuario no es válido con un mensaje explicando por qué
     */
 
     public void createUser(UserDTO user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new UserNotValidException("User with email " + user.getEmail() + " already exists");
+
+        if (userRepository.existsByIdentificador(user.getIdentificador())) {
+            throw new UserNotValidException("Usuario con el identificador " + user.getIdentificador() + " ya existe");
         }
 
         User newUser = modelMapper.map(user, User.class);
@@ -84,13 +86,19 @@ public class UserService {
         if (user == null) {
             throw new UserNotFoundException("Usuario no encontrado por id:" + userId);
         }
-        if (!user.getEmail().equals(userInfoDTO.getEmail()) && userRepository.existsByEmail(userInfoDTO.getEmail())) {
-            throw new UserNotValidException("Usuario con correo electrónico " + userInfoDTO.getEmail() + " ya existe");
+        if (!user.getNombreContratante().equals(userInfoDTO.getNombreContratante()) && userRepository.existsByName(userInfoDTO.getNombreContratante())) {
+            throw new UserNotValidException("Usuario con correo electrónico " + userInfoDTO.getNombreContratante() + " ya existe");
         }
-        user.setEmail(userInfoDTO.getEmail());
-        user.setName(userInfoDTO.getName());
-        user.setSurname(userInfoDTO.getSurname());
-        user.setPhone(userInfoDTO.getPhone());
+        
+        user.setNombreContratantista(userInfoDTO.getNombreContratantista());
+        user.setDocumentoContratantista(userInfoDTO.getDocumentoContratantista());
+        user.setFechaInicial(new java.sql.Date(userInfoDTO.getFechaInicial().getTime()));
+        user.setFechaFinal(new java.sql.Date(userInfoDTO.getFechaFinal().getTime()));
+        user.setValor(userInfoDTO.getValor());
+        user.setNombreContratante(userInfoDTO.getNombreContratante());
+        user.setDocumentoContratante(userInfoDTO.getDocumentoContratante());
+
+
         userRepository.save(user);
     }
 
@@ -103,18 +111,31 @@ public class UserService {
 
 
     public boolean isValidUser(UserDTO user) {
-        if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            throw new UserNotValidException("El correo electrónico no puede estar vacío");
+        if (user.getIdentificador() == null || user.getIdentificador().isEmpty()) {
+            throw new UserNotValidException("El identificador no puede estar vacío");
         }
-        if (user.getName() == null || user.getName().isEmpty()) {
-            throw new UserNotValidException("El nombre no puede estar vacío");
+        if (user.getValor() == null || user.getValor() < 0) {
+            throw new UserNotValidException("El valor no puede ser negativo");
         }
-        if (user.getSurname() == null || user.getSurname().isEmpty()) {
-            throw new UserNotValidException("El apellido no puede estar vacío");
+        if (user.getNombreContratante() == null || user.getNombreContratante().isEmpty()) {
+            throw new UserNotValidException("El nombre del contratante no puede estar vacío");
         }
-        if (user.getPhone() == null || user.getPhone().isEmpty()) {
-            throw new UserNotValidException("El teléfono no puede estar vacío");
+        if (user.getDocumentoContratante() == null || user.getDocumentoContratante().isEmpty()) {
+            throw new UserNotValidException("El documento del contratante no puede estar vacío");
         }
+        if (user.getNombreContratantista() == null || user.getNombreContratantista().isEmpty()) {
+            throw new UserNotValidException("El nombre del contratantista no puede estar vacío");
+        }
+        if (user.getDocumentoContratantista() == null || user.getDocumentoContratantista().isEmpty()) {
+            throw new UserNotValidException("El documento del contratantista no puede estar vacío");
+        }
+        if (user.getFechaInicial() == null) {
+            throw new UserNotValidException("La fecha inicial no puede estar vacía");
+        }
+        if (user.getFechaFinal() == null) {
+            throw new UserNotValidException("La fecha final no puede estar vacía");
+        }
+
         return true;
     }
 

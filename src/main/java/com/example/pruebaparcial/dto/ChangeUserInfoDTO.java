@@ -1,6 +1,8 @@
 package com.example.pruebaparcial.dto;
 
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +14,12 @@ import lombok.Setter;
 @Setter
 
 public class ChangeUserInfoDTO {
-    private String email;
-    private String name;
-    private String surname;
-    private String phone;
-    private boolean isHost;
-    private boolean isRenter;
+    private String identificador;
+    private Double valor;
+    private String nombreContratante;
+    private String documentoContratante;
+    private String nombreContratantista;
+    private String documentoContratantista;
+    private Date fechaInicial;
+    private Date fechaFinal;
 }

@@ -5,15 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class UserDTO {
-    private String email;
-    private String name;
-    private String surname;
-    private String phone;
+    private String identificador;
+    private Double valor;
+    private String nombreContratante;
+    private String documentoContratante;
+    private String nombreContratantista;
+    private String documentoContratantista;
+    private Date fechaInicial;
+    private Date fechaFinal;
 
-
+   
 }

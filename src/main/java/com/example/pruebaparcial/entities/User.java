@@ -1,5 +1,6 @@
 package com.example.pruebaparcial.entities;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,19 +33,20 @@ public class User {
     private Long id;
 
     @Column(unique = true)
-    private String email;
-    private String name;
-    private String surname;
-    private String phone;
-    private int imageId;
+    private String identificador;
+    private Double valor;
+    private String nombreContratante;
+    private String documentoContratante;
+    private String nombreContratantista;
+    private String documentoContratantista;
+    private Date fechaInicial;
+    private Date fechaFinal;
     
-    //@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-   // private List<Property> properties;
-   //ponerlo en abajo 
+  
 	
    @Override
    public int hashCode() {
-       return Objects.hash(email,  name, phone, surname);
+       return Objects.hash(identificador, valor, nombreContratante, documentoContratante, nombreContratantista, documentoContratantista, fechaInicial, fechaFinal);
    }
 
    @Override
@@ -54,10 +56,14 @@ public class User {
         if (obj == null || getClass() != obj.getClass())
             return false;
         User user = (User) obj;
-        return Objects.equals(email, user.email) 
-                && Objects.equals(name, user.name) 
-                && Objects.equals(phone, user.phone) 
-                && Objects.equals(surname, user.surname);
+        return Objects.equals(identificador, user.identificador) 
+        && Objects.equals(valor, user.valor) 
+        && Objects.equals(nombreContratante, user.nombreContratante) 
+        && Objects.equals(documentoContratante, user.documentoContratante) 
+        && Objects.equals(nombreContratantista, user.nombreContratantista) 
+        && Objects.equals(documentoContratantista, user.documentoContratantista) 
+        && Objects.equals(fechaInicial, user.fechaInicial) 
+        && Objects.equals(fechaFinal, user.fechaFinal);
     }
 
 }
