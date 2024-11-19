@@ -25,13 +25,13 @@ import com.example.pruebaparcial.exceptions.UserNotValidException;
 public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-   
+    
 
     @Autowired
     public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        
+    
     }
 
     public UserDTO convertToDto(User user) {
@@ -72,6 +72,7 @@ public class UserService {
         userRepository.save(newUser);
     }
 
+   
 
     /**
     * Actualiza un usuario existente después de verificar si todos los campos son válidos y el correo electrónico ya está en uso
@@ -135,7 +136,7 @@ public class UserService {
         if (user.getFechaFinal() == null) {
             throw new UserNotValidException("La fecha final no puede estar vacía");
         }
-
+        
         return true;
     }
 
