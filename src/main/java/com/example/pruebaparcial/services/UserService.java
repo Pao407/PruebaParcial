@@ -70,31 +70,6 @@ public class UserService {
         userRepository.save(newUser);
     }
 
-    /**
-    * Sube una foto para un usuario
-    * @param photo
-    * @param userId
-    * @throws UserNotFoundException
-    * @throws IOException
-    */
-
-    public void uploadPhoto(MultipartFile photo, Long userId) throws UserNotFoundException, IOException {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
-            throw new UserNotFoundException("Usuario para subir fotos no encontrado por id: " + userId);
-        }
-        int imageId = user.getImageId();
-        if (imageId != 0) {
-            imageRepository.deleteById(imageId);
-        }
-        Image image = new Image();
-        image.setImageData(photo.getBytes());
-        image.setName(photo.getOriginalFilename());
-        
-        int newImageId = imageRepository.save(image).getId();
-        user.setImageId(newImageId);
-        userRepository.save(user);
-    }
 
     /**
     * Actualiza un usuario existente después de verificar si todos los campos son válidos y el correo electrónico ya está en uso
