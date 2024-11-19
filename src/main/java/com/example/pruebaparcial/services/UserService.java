@@ -149,7 +149,7 @@ public class UserService {
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
-            throw new UserNotFoundException("Usuario no encontrado por id:" + userId);
+            throw new UserNotFoundException("contrato no encontrado por id:" + userId);
         }
         userRepository.deleteById(userId);
     }
