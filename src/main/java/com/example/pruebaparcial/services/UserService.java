@@ -49,7 +49,7 @@ public class UserService {
         UserInfoDTO user = userRepository.findUserInfoDTOById(userId);
 
         if (user == null) {
-            throw new UserNotFoundException("User information not found by id: " + userId);
+            throw new UserNotFoundException("contrato con id: " + userId);
         }
 
         return user;
@@ -65,7 +65,7 @@ public class UserService {
     public void createUser(UserDTO user) {
 
         if (userRepository.existsByIdentificador(user.getIdentificador())) {
-            throw new UserNotValidException("Usuario con el identificador " + user.getIdentificador() + " ya existe");
+            throw new UserNotValidException("contrato con el identificador " + user.getIdentificador() + " ya existe");
         }
 
         User newUser = modelMapper.map(user, User.class);
@@ -85,10 +85,10 @@ public class UserService {
     public void updateUser(ChangeUserInfoDTO userInfoDTO, Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
-            throw new UserNotFoundException("Usuario no encontrado por id:" + userId);
+            throw new UserNotFoundException("contrato no encontrado por id:" + userId);
         }
         if (!user.getIdentificador().equals(userInfoDTO.getIdentificador()) && userRepository.existsByIdentificador(userInfoDTO.getIdentificador())) {
-            throw new UserNotValidException("Usuario con identificador " + userInfoDTO.getIdentificador() + " ya existe");
+            throw new UserNotValidException("contraro con identificador " + userInfoDTO.getIdentificador() + " ya existe");
         }
         
         user.setNombreContratantista(userInfoDTO.getNombreContratantista());
