@@ -87,8 +87,8 @@ public class UserService {
         if (user == null) {
             throw new UserNotFoundException("Usuario no encontrado por id:" + userId);
         }
-        if (!user.getNombreContratante().equals(userInfoDTO.getNombreContratante()) && userRepository.existsByName(userInfoDTO.getNombreContratante())) {
-            throw new UserNotValidException("Usuario con correo electrónico " + userInfoDTO.getNombreContratante() + " ya existe");
+        if (!user.getIdentificador().equals(userInfoDTO.getIdentificador()) && userRepository.existsByIdentificador(userInfoDTO.getIdentificador())) {
+            throw new UserNotValidException("Usuario con identificador " + userInfoDTO.getIdentificador() + " ya existe");
         }
         
         user.setNombreContratantista(userInfoDTO.getNombreContratantista());
@@ -136,7 +136,7 @@ public class UserService {
         if (user.getFechaFinal() == null) {
             throw new UserNotValidException("La fecha final no puede estar vacía");
         }
-        
+
         return true;
     }
 
