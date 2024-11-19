@@ -5,22 +5,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class UserInfoDTO {
     private Long id;
-    private String email;
-    private String name;
-    private String surname;
-    private String phone;
-    private int imageId;
+    private String identificador;
+    private Double valor;
+    private String nombreContratante;
+    private String documentoContratante;
+    private String nombreContratantista;
+    private String documentoContratantista;
+    private Date fechaInicial;
+    private Date fechaFinal;
 
-    // Constructor que coincide con la consulta
-    public UserInfoDTO(Long id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
+   
 }
