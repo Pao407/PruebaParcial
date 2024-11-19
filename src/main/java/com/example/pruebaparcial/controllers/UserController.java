@@ -59,14 +59,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-    * Sube una foto para un usuario
-    * @param photo
-    * @param userId
-    * @return
-    * @throws IOException
-    * @throws UserNotFoundException
-    */
+
 
     
 
